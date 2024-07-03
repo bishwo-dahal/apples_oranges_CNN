@@ -1,0 +1,14 @@
+__pycache__/
+
+
+# Datasets
+data/
+output/
+
+
+# Trained Models
+*.pth
+
+
+# Untrack all the files that are generated on training phase
+analysis/Epochs*_2024*.png
