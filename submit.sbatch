@@ -1,11 +1,16 @@
 #!/bin/bash
 #SBATCH -A trn025
 #SBATCH -J Image_Classification
-#SBATCH -o output/image_classification%n_%j.out
-#SBATCH -e output/image_classification%n_%j.out
 #SBATCH -t 11:00:00
 #SBATCH -p batch
 #SBATCH -N 1
+#SBATCH -e output/classification_%j.out
+#SBATCH -o output/classification_%j.out
+
+
+NODES=1
+GPUS=8
+CPUS=8
 
 # Only necessary if submitting like: sbatch --export=NONE ... (recommended)
 # Do NOT include this line when submitting without --export=NONE
@@ -13,8 +18,7 @@
 
 # Load modules
 module load amd-mixed/5.7.1
-module load cray-mpich/8.1.26
-module  load cray-mpich-abi/8.1.26
+module load cray-mpich-abi/8.1.26
 module load craype-accel-amd-gfx90a
 
 #setting the path of sif files so that it will be easiser for future
@@ -40,13 +44,10 @@ export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.
 export APPTAINER_CONTAINLIBS="/usr/lib64/libcxi.so.1,/usr/lib64/libjson-c.so.3,/lib64/libtinfo.so.6,/usr/lib64/libnl-3.so.200"
 export APPTAINERENV_LD_PRELOAD=/opt/cray/pe/mpich/8.1.26/gtl/lib/libmpi_gtl_hsa.so.0:
 
-NODES=1
-GPUS=8
-CPUS=60
 echo "Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
 
 # Run script
-srun -N${NODES} -n1   -c${CPUS} --gpus-per-task=${GPUS} --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CURRENT_SIF_FILE} ./pyrun.sh
+srun -N${NODES} -n1   -c${CPUS} --gpus-per-task=${GPUS} --gpu-bind=closest  apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CURRENT_SIF_FILE} ./pyrun.sh
 #srun -N1 apptainer exec --bind $BINDS --workdir `pwd` --rocm  ../containers/opensusempich342rocm571pytorch2.sif ldd /opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich//libmpi.so.12 
 
 echo "Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
