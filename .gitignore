@@ -12,3 +12,5 @@ output/
 
 # Untrack all the files that are generated on training phase
 analysis/Epochs*_2024*.png
+
+snapshot.pt

@@ -227,6 +227,7 @@ def train_step(model: torch.nn.Module,
 
         # 2. Calculate  and accumulate loss
         loss = loss_fn(y_pred, y)
+        print(y_pred,"Targets\n",y);
         train_loss += loss.item() 
 
         # 3. Optimizer zero grad
@@ -371,7 +372,7 @@ def plot_loss_curves(results):
     epochs = range(len(results['train_loss']))
 
     # Setup a plot 
-    plt.figure(figsize=(15, 7))
+    plt.figure(figsize=(15, 7),dpi=500)
 
     # Plot loss
     plt.subplot(1, 2, 1)
@@ -391,7 +392,7 @@ def plot_loss_curves(results):
     from datetime import datetime
     now = datetime.now();
     
-    plt.savefig("analysis/Epochs and Accuracy "+now.strftime("%d_%m_%Y %H:%M:%S"));
+    plt.savefig("analysis/Epochs and Accuracy "+now.strftime("%d_%m_%Y %H:%M:%S"),dpi=450);
 
 plot_loss_curves(model_results)
 

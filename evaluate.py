@@ -37,9 +37,10 @@ custom_image_transformed = custom_image_transform(custom_image)
 
 # Loading the model
 model = ImageClassifier().to(device=device);
-model = nn.DataParallel(model);
+# model = nn.DataParallel(model);
 model.to(device);
-model.load_state_dict(torch.load("/ccsopen/home/bishwodahal/python/apples_oranges/apples_oranges_model.pth"));
+state_dict = torch.load("/ccsopen/home/bishwodahal/python/apples_oranges/snapshot.pt")
+model.load_state_dict(state_dict["MODEL_STATE"]);
 
 # Adding dimension of 0 to transformed image
 custom_image_transformed_with_batch_size = custom_image_transformed.unsqueeze(dim=0)
@@ -59,4 +60,3 @@ custom_image_pred_label = torch.argmax(custom_image_pred_probs, dim=1)
 class_names = ['Apples','Oranges']
 
 print("The image should be of "+class_names[custom_image_pred_label.cpu()])
-
