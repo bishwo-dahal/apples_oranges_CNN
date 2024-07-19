@@ -3,12 +3,12 @@
 #SBATCH -J Image_Classification
 #SBATCH -t 11:00:00
 #SBATCH -p batch
-#SBATCH -N 2
+#SBATCH -N 5
 #SBATCH -e output/classification_%j.out
 #SBATCH -o output/classification_%j.out
 
 
-NODES=2
+NODES=5
 GPUS=8
 CPUS=48
 
@@ -47,7 +47,7 @@ export APPTAINERENV_LD_PRELOAD=/opt/cray/pe/mpich/8.1.26/gtl/lib/libmpi_gtl_hsa.
 echo "Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
 
 # Run script
-srun -N${NODES} -n2   -c${CPUS} --gpus-per-task=${GPUS} --gpu-bind=closest  apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CURRENT_SIF_FILE} ./pyrun.sh
+srun -N${NODES} -n5   -c${CPUS} --gpus-per-task=${GPUS} --gpu-bind=closest  apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CURRENT_SIF_FILE} ./pyrun.sh
 #srun -N1 apptainer exec --bind $BINDS --workdir `pwd` --rocm  ../containers/opensusempich342rocm571pytorch2.sif ldd /opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich//libmpi.so.12 
 
 echo "Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"

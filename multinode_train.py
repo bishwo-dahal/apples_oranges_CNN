@@ -26,7 +26,7 @@ import random
 from PIL import Image
 import glob
 from pathlib import Path
-
+from timeit import default_timer as timer;
 # Set seed
 random.seed(42) 
 
@@ -198,6 +198,7 @@ def main(save_every: int, total_epochs: int, batch_size: int, local_rank: int, w
     dist.destroy_process_group()
 
 
+start_time = timer();
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description='simple distributed training job')
@@ -233,9 +234,12 @@ if __name__ == "__main__":
         init_method='env://',
         rank=rank,
         world_size=world_size,
-        timeout=datetime.timedelta(seconds=20000)
+        timeout=datetime.timedelta(seconds=900000)
     )
 
     torch.cuda.set_device(local_rank)
 
     main(args.save_every, args.total_epochs, args.batch_size, local_rank, global_rank)
+
+end_time = timer();
+print(f"Total training time: {end_time-start_time:.3f} seconds")
