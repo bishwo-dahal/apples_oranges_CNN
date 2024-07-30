@@ -1,11 +1,15 @@
 #!/bin/bash
 #SBATCH -A trn025
-#SBATCH -J ml_test_ODO
-#SBATCH -o ODO_apptainer_mltests.%j
-#SBATCH -e ODO_apptainer_mltests.%j
-#SBATCH -t 00:05:00
+#SBATCH -J Image_Classification
+#SBATCH -t 1:00:00
 #SBATCH -p batch
-#SBATCH -N 2
+#SBATCH -e output/classification_%j.out
+#SBATCH -o output/classification_%j.out
+#SBATCH -N 1
+
+NODES=1
+GPUS=8
+CPUS=7
 
 # Only necessary if submitting like: sbatch --export=NONE ... (recommended)
 # Do NOT include this line when submitting without --export=NONE
@@ -42,8 +46,13 @@ export APPTAINERENV_LD_PRELOAD=/opt/cray/pe/mpich/8.1.26/gtl/lib/libmpi_gtl_hsa.
 
 rm snapshot.pt
 
+# Exporting snapshot path so multiple jobs doesn't collide with single snapshot.pt file
+export MODEL_SNAPSHOT_PATH="snapshot_`date`.pt"
+echo ${MODEL_SNAPSHOT_PATH}
+echo "DDP: Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
 # Run script
 #srun -N2 --tasks-per-node=8 -c7 --gpus-per-task=1 --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CONTAINER} ./pyrun.sh
-srun -N2 --tasks-per-node=8 -c7 --gpus-per-task=1 --gpu-bind=closest ./pyrun_multinode.sh
+srun -N${NODES} --tasks-per-node=${GPUS} -c${CPUS} --gpus-per-task=1 --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CONTAINER}  ./pyrun_multinode.sh
 #srun -N1 apptainer exec --bind $BINDS --workdir `pwd` --rocm  ../containers/opensusempich342rocm571pytorch2.sif ldd /opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich//libmpi.so.12 
 
+echo "DDP: Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"

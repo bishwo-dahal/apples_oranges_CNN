@@ -17,7 +17,6 @@ from ImageClassifier import ImageClassifier
 image_path = "./data"
 
 
-
 train_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/training_set/training_set"
 test_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/test_set/test_set"
 train_dir, test_dir
@@ -187,7 +186,7 @@ def prepare_dataloader(dataset: Dataset, batch_size: int):
     )
 
 
-def main(save_every: int, total_epochs: int, batch_size: int, local_rank: int, world_rank: int, snapshot_path: str = "snapshot.pt"):
+def main(save_every: int, total_epochs: int, batch_size: int, local_rank: int, world_rank: int, snapshot_path: str):
     dataset, model, optimizer = load_train_objs()
     train_data = prepare_dataloader(dataset, batch_size)
 
@@ -226,6 +225,10 @@ if __name__ == "__main__":
     os.environ['MASTER_ADDR'] = str(args.master_addr)
     os.environ['MASTER_PORT'] = str(args.master_port)
     os.environ['NCCL_SOCKET_IFNAME'] = 'hsn0'
+
+    # Path of snapshot for every single job
+    snapshot_path = str(os.environ["MODEL_SNAPSHOT_PATH"])
+    print(snapshot_path, " is snapshot path")
     
     import datetime;
     dist.init_process_group(
@@ -239,7 +242,7 @@ if __name__ == "__main__":
 
     torch.cuda.set_device(local_rank)
 
-    main(args.save_every, args.total_epochs, args.batch_size, local_rank, global_rank)
+    main(args.save_every, args.total_epochs, args.batch_size, local_rank, global_rank,snapshot_path=snapshot_path)
 
 end_time = timer();
 print(f"Total training time: {end_time-start_time:.3f} seconds")
