@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A trn025
+#SBATCH -A gen243
 #SBATCH -J Image_Classification
 #SBATCH -t 1:00:00
 #SBATCH -p batch
@@ -28,7 +28,19 @@ ips=`hostname -I`
 read -ra arr <<< ${ips}
 export MASTER_ADDR=${arr[0]}
 echo "MASTER_ADDR=" $MASTER_ADDR
-export CONTAINER=/ccsopen/home/bishwodahal/containers/olcf_projects/trn025/containers//opensusempich342rocm571pytorch2.sif
+
+# Currently supports both frontier and ODO; need a structure later to have it working on any machine
+# /gen243/ or /trn025/ links to the storage that is given to us for temporary storage
+
+SIF_DIRECTORY=~/containers
+if [[ $MODULEPATH =~ \/sw\/frontier ]]; then
+    SIF_DIRECTORY+=/gen243/
+else
+    SIF_DIRECTORY+=/olcf_projects/trn025/
+fi
+
+export CURRENT_SIF_FILE=$SIF_DIRECTORY/containers/opensusempich342rocm571pytorch2.sif
+
 
 # Needed to bypass MIOpen, Disk I/O Errors
 export MIOPEN_USER_DB_PATH="/tmp/my-miopen-cache"
@@ -52,7 +64,7 @@ echo ${MODEL_SNAPSHOT_PATH}
 echo "DDP: Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
 # Run script
 #srun -N2 --tasks-per-node=8 -c7 --gpus-per-task=1 --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CONTAINER} ./pyrun.sh
-srun -N${NODES} --tasks-per-node=${GPUS} -c${CPUS} --gpus-per-task=1 --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CONTAINER}  ./pyrun_multinode.sh
+srun -N${NODES} --tasks-per-node=${GPUS} -c${CPUS} --gpus-per-task=1 --gpu-bind=closest apptainer exec --bind $BINDS --workdir `pwd` --rocm ${CURRENT_SIF_FILE}  ./pyrun_multinode.sh
 #srun -N1 apptainer exec --bind $BINDS --workdir `pwd` --rocm  ../containers/opensusempich342rocm571pytorch2.sif ldd /opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich//libmpi.so.12 
 
 echo "DDP: Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"

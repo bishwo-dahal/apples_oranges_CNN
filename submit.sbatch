@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A trn025
+#SBATCH -A gen243
 #SBATCH -J Image_Classification
 #SBATCH -t 11:00:00
 #SBATCH -p batch
@@ -22,7 +22,18 @@ module load cray-mpich-abi/8.1.26
 module load craype-accel-amd-gfx90a
 
 #setting the path of sif files so that it will be easiser for future
-export CURRENT_SIF_FILE=/ccsopen/home/bishwodahal/containers/olcf_projects/trn025/containers/opensusempich342rocm571pytorch2.sif
+
+# Currently supports both frontier and ODO; need a structure later to have it working on any machine
+# /gen243/ or /trn025/ links to the storage that is given to us for temporary storage
+
+SIF_DIRECTORY=~/containers
+if [[ $MODULEPATH =~ \/sw\/frontier ]]; then
+    SIF_DIRECTORY+=/gen243/
+else
+    SIF_DIRECTORY+=/olcf_projects/trn025/
+fi
+
+export CURRENT_SIF_FILE=$SIF_DIRECTORY/containers/opensusempich342rocm571pytorch2.sif
 
 # Get address of head node
 ips=`hostname -I`

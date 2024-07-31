@@ -7,9 +7,11 @@ from torch import nn;
 
 device = "cuda" if torch.cuda.is_available() else "cpu";
 
+HOME_PATH = os.path.expanduser("~");
+
 
 # Choose a image.
-custom_image_path = "/ccsopen/home/bishwodahal/python/apples_oranges/test.jpg"
+custom_image_path = HOME_PATH+"/python/apples_oranges/test.jpg"
 
 def test_image(image_path,big_data=False):
     import torchvision
@@ -40,7 +42,7 @@ def test_image(image_path,big_data=False):
     model = ImageClassifier().to(device=device);
     # model = nn.DataParallel(model);
     model.to(device);
-    state_dict = torch.load("/ccsopen/home/bishwodahal/python/apples_oranges/snapshot.pt")
+    state_dict = torch.load(HOME_PATH+"/python/apples_oranges/snapshot.pt")
     model.load_state_dict(state_dict["MODEL_STATE"]);
 
     # Adding dimension of 0 to transformed image
@@ -71,8 +73,7 @@ def test_image(image_path,big_data=False):
 
 def test_all_data():
     import os
-
-    folder_path = '/ccsopen/home/bishwodahal/python/apples_oranges/data/test_set/test_set/orange'
+    folder_path = HOME_PATH+'/python/apples_oranges/data/test_set/test_set/orange'
     apple_orange = {"Apples":0,"Oranges":0}
     
     # List all files in the directory

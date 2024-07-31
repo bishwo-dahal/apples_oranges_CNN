@@ -16,9 +16,10 @@ from ImageClassifier import ImageClassifier
     
 image_path = "./data"
 
+HOME_PATH = os.path.expanduser("~");
 
-train_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/training_set/training_set"
-test_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/test_set/test_set"
+train_dir = HOME_PATH+"/python/apples_oranges/data/training_set/training_set"
+test_dir =  HOME_PATH+"/python/apples_oranges/data/test_set/test_set"
 train_dir, test_dir
 
 import random

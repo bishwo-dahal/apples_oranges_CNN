@@ -11,10 +11,11 @@ import os
     
 image_path = "./data"
 
+home_path = os.path.expanduser("~")
 
 
-train_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/training_set/training_set"
-test_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/test_set/test_set"
+train_dir = home_path+"/python/apples_oranges/data/training_set/training_set"
+test_dir = home_path+"/python/apples_oranges/data/test_set/test_set"
 train_dir, test_dir
 
 import random
