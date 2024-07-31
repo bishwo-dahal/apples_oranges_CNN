@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -A trn025
+#SBATCH -A gen243
 #SBATCH -J Image_Classification
-#SBATCH -t 11:00:00
+#SBATCH -t 1:00:00
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -e output/classification_%j.out
@@ -10,7 +10,7 @@
 
 NODES=1
 GPUS=8
-CPUS=8
+CPUS=16
 
 # Only necessary if submitting like: sbatch --export=NONE ... (recommended)
 # Do NOT include this line when submitting without --export=NONE
@@ -22,7 +22,7 @@ module load cray-mpich-abi/8.1.26
 module load craype-accel-amd-gfx90a
 
 #setting the path of sif files so that it will be easiser for future
-export CURRENT_SIF_FILE=/ccsopen/home/bishwodahal/containers/olcf_projects/trn025/containers/opensusempich342rocm571pytorch2.sif
+export CURRENT_SIF_FILE=/ccs/home/bishwodahal/containers/gen243/containers/opensusempich342rocm571pytorch2.sif
 
 # Get address of head node
 ips=`hostname -I`

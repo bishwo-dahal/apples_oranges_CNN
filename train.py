@@ -13,8 +13,8 @@ image_path = "./data"
 
 
 
-train_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/training_set/training_set"
-test_dir = "/ccsopen/home/bishwodahal/python/apples_oranges/data/test_set/test_set"
+train_dir = "/ccs/home/bishwodahal/containers/projects/apples_oranges_CNN/data/training_set/training_set"
+test_dir = "/ccs/home/bishwodahal/containers/projects/apples_oranges_CNN/data/test_set/test_set"
 train_dir, test_dir
 
 import random

@@ -9,7 +9,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu";
 
 
 # Choose a image.
-custom_image_path = "/ccsopen/home/bishwodahal/python/apples_oranges/test.jpg"
+custom_image_path = "/ccs/home/bishwodahal/containers/projects/apples_oranges_CNN/test.jpg"
 
 import torchvision
 # Load in custom image and convert the tensor values to float32
@@ -39,7 +39,7 @@ custom_image_transformed = custom_image_transform(custom_image)
 model = ImageClassifier().to(device=device);
 model = nn.DataParallel(model);
 model.to(device);
-model.load_state_dict(torch.load("/ccsopen/home/bishwodahal/python/apples_oranges/apples_oranges_model.pth"));
+model.load_state_dict(torch.load("/ccs/home/bishwodahal/containers/projects/apples_oranges_CNN/apples_oranges_model.pth"));
 
 # Adding dimension of 0 to transformed image
 custom_image_transformed_with_batch_size = custom_image_transformed.unsqueeze(dim=0)
