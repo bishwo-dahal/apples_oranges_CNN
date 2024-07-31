@@ -35,8 +35,10 @@ echo "MASTER_ADDR=" $MASTER_ADDR
 SIF_DIRECTORY=~/containers
 if [[ $MODULEPATH =~ \/sw\/frontier ]]; then
     SIF_DIRECTORY+=/gen243/
+    SLURM_NAME=slurmd
 else
     SIF_DIRECTORY+=/olcf_projects/trn025/
+    SLURM_NAME=slurm
 fi
 
 export CURRENT_SIF_FILE=$SIF_DIRECTORY/containers/opensusempich342rocm571pytorch2.sif
@@ -49,7 +51,7 @@ rm -rf ${MIOPEN_USER_DB_PATH}
 mkdir -p ${MIOPEN_USER_DB_PATH}
 
 #export MPICH_GPU_SUPPORT_ENABLED=1
-export BINDS=/usr/share/libdrm,/var/spool/slurm,/opt/cray,${PWD}
+export BINDS=/usr/share/libdrm,/var/spool/$SLURM_NAME,/opt/cray,${PWD}
 export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.26/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
 export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.26/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
 
