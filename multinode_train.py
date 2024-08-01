@@ -14,9 +14,10 @@ import os
 
 from ImageClassifier import ImageClassifier
     
-image_path = "./data"
 
 HOME_PATH = os.path.expanduser("~");
+
+image_path = HOME_PATH+"/data"
 
 train_dir = HOME_PATH+"/python/apples_oranges/data/training_set/training_set"
 test_dir =  HOME_PATH+"/python/apples_oranges/data/test_set/test_set"
