@@ -17,10 +17,11 @@ from ImageClassifier import ImageClassifier
 
 HOME_PATH = os.path.expanduser("~");
 
-image_path = HOME_PATH+"/data"
+image_path = "./data"
 
-train_dir = HOME_PATH+"/python/apples_oranges/data/training_set/training_set"
-test_dir =  HOME_PATH+"/python/apples_oranges/data/test_set/test_set"
+# TODO: Make it work depending on machines
+train_dir = HOME_PATH+"/containers/projects/apples_oranges_CNN/data/training_set/training_set"
+test_dir =  HOME_PATH+"/containers/projects/apples_oranges_CNN/data/test_set/test_set"
 train_dir, test_dir
 
 import random
