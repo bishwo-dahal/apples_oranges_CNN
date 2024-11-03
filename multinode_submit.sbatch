@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A gen243
+#SBATCH -A gen007rats
 #SBATCH -J Image_Classification
 #SBATCH -t 3:00
 #SBATCH -p batch
@@ -30,11 +30,11 @@ export MASTER_ADDR=${arr[0]}
 echo "MASTER_ADDR=" $MASTER_ADDR
 
 # Currently supports both frontier and ODO; need a structure later to have it working on any machine
-# /gen243/ or /trn025/ links to the storage that is given to us for temporary storage
+# /gen007rats/ or /trn025/ links to the storage that is given to us for temporary storage
 
 SIF_DIRECTORY=~/containers
 if [[ $MODULEPATH =~ \/sw\/frontier ]]; then
-    SIF_DIRECTORY+=/gen243/
+    SIF_DIRECTORY+=/gen007rats/
     SLURM_NAME=slurmd
 else
     SIF_DIRECTORY+=/olcf_projects/trn025/

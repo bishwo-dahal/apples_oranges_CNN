@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -A gen243
+#SBATCH -A gen007rats
 #SBATCH -J Image_Classification
-#SBATCH -t 11:00:00
+#SBATCH -t 1:00:00
 #SBATCH -p batch
 #SBATCH -N 5
 #SBATCH -e output/classification_%j.out
@@ -24,11 +24,11 @@ module load craype-accel-amd-gfx90a
 #setting the path of sif files so that it will be easiser for future
 
 # Currently supports both frontier and ODO; need a structure later to have it working on any machine
-# /gen243/ or /trn025/ links to the storage that is given to us for temporary storage
+# /gen007rats/ or /trn025/ links to the storage that is given to us for temporary storage
 
 SIF_DIRECTORY=~/containers
 if [[ $MODULEPATH =~ \/sw\/frontier ]]; then
-    SIF_DIRECTORY+=/gen243/
+    SIF_DIRECTORY+=/gen007rats/
     SLURM_NAME=slurmd
 else
     SIF_DIRECTORY+=/olcf_projects/trn025/
