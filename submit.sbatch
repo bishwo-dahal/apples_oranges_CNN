@@ -18,7 +18,7 @@ CPUS=48
 
 # Load modules
 module load amd-mixed/5.7.1
-module load cray-mpich-abi/8.1.26
+module load cray-mpich-abi/8.1.28
 module load craype-accel-amd-gfx90a
 
 #setting the path of sif files so that it will be easiser for future
@@ -51,11 +51,11 @@ mkdir -p ${MIOPEN_USER_DB_PATH}
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 export BINDS=/usr/share/libdrm,/var/spool/$SLURM_NAME,/opt/cray,${PWD}
-export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.26/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
-export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.26/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.26/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
+export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.28/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.28/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
+export APPTAINERENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.28/ofi/crayclang/14.0/lib-abi-mpich:/opt/cray/pe/mpich/8.1.28/gtl/lib:/opt/rocm/lib:/opt/rocm/lib64:$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:/opt/cray/pe/lib64"
 
 export APPTAINER_CONTAINLIBS="/usr/lib64/libcxi.so.1,/usr/lib64/libjson-c.so.3,/lib64/libtinfo.so.6,/usr/lib64/libnl-3.so.200"
-export APPTAINERENV_LD_PRELOAD=/opt/cray/pe/mpich/8.1.26/gtl/lib/libmpi_gtl_hsa.so.0:
+export APPTAINERENV_LD_PRELOAD=/opt/cray/pe/mpich/8.1.28/gtl/lib/libmpi_gtl_hsa.so.0:
 
 echo "Nodes: ${NODES} | GPUS: ${GPUS} | CPUS: ${CPUS}"
 
