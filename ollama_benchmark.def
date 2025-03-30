@@ -2,7 +2,7 @@ Bootstrap: localimage
 From: /ccsopen/home/bishwodahal/containers/olcf_projects/gen243/containers/ollama.sif
 %files
 
-    astrollama_benchmark.py
+    /ccsopen/home/bishwodahal/python/apples_oranges_CNN/astrollama_benchmark.py astrollama_benchmark.py
 
 %post
 
@@ -10,6 +10,3 @@ set -e
 
 ./bin/ollama serve&
 
-%runscript
-source /opt/miniforge/bin/activate
-python3 astrollama_benchmark.py

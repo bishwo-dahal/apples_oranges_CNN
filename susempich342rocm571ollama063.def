@@ -20,15 +20,19 @@ source /opt/miniforge/bin/activate
 
 # downloading ollama pre-released model
 wget https://github.com/ollama/ollama/releases/download/v0.6.3-rc0/ollama-linux-amd64.tgz
+wget https://github.com/ollama/ollama/releases/download/v0.6.3-rc0/ollama-linux-amd64-rocm.tgz
 
 # extracting ollama
 tar -xzvf ollama-linux-amd64.tgz
+tar -xzvf ollama-linux-amd64-rocm.tgz
+
+export OLLAMA_HOME=.ollama
 
 # start ollama after extracting
-./bin/ollama serve&
-
+/bin/ollama serve&
+sleep 30
 # download astrollama
-./bin/ollama pull hf.co/UniverseTBD/astrollama.gguf:latest
+/bin/ollama pull hf.co/UniverseTBD/astrollama.gguf:latest
 
 # installing ollama via pip to use it in python
 pip install ollama

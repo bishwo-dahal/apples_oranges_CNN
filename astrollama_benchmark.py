@@ -12,7 +12,7 @@ def query_llama(prompt):
 
 if __name__ == "__main__":
     prompt = "Explain different types of stars in our universe."
-    
+    print("Asked prompt: "+prompt)
     response, time_taken = query_llama(prompt)
     print("AstroLlama Response:")
     print(response)
